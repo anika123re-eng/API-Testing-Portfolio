@@ -1,0 +1,146 @@
+{
+  "info": {
+    "_postman_id": "b5bdc30e-ba8b-4472-9da3-c57dcd6e96dc",
+    "name": "My Collection1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59182936",
+    "_collection_link": "https://go.postman.co/collection/59182936-b5bdc30e-ba8b-4472-9da3-c57dcd6e96dc?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "New Folder",
+      "item": [
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "console.log(\"Token:\", jsonData.token);",
+                  "console.log(\"Environment Token:\", pm.environment.get(\"Token\"));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "pub_d2e3be1db793a0bc7389f8261781b4afae8065b378d96d021d96d33e3c904824",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/login",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Users",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const now = new Date();\r",
+                  "\r",
+                  "// ISO 8601 format e.g. \"2026-11-07T14:18:00.000Z\"\r",
+                  "pm.environment.set(\"timestamp\", now.toISOString());\r",
+                  "\r",
+                  "\r",
+                  "console.log(\"timestamp:\",now.toISOString())"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": ""
+              },
+              {
+                "key": "x-api-key",
+                "value": "pro_ee108842fe1ab4572a8c890e8c14b8d927682348fbb2fedf5618a4883579882b"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://reqres.in/api/users?page=2",
+              "protocol": "https",
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

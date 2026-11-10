@@ -1,0 +1,229 @@
+{
+  "info": {
+    "_postman_id": "39e1f6d3-b163-401d-b2f1-e6df14b5d96f",
+    "name": "User Registration Flow - Data Driven",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59182936",
+    "_collection_link": "https://go.postman.co/collection/59182936-39e1f6d3-b163-401d-b2f1-e6df14b5d96f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Log to console",
+              "const envName = pm.environment.name || \"No environment selected\";",
+              "console.log(\"Current Environment:\", envName);",
+              "",
+              "// Show in Visualize tab (response body)",
+              "const template = `",
+              "    <h2 style=\"font-family:sans-serif; color:#333;\">Current Environment</h2>",
+              "    <p style=\"font-family:sans-serif; font-size:18px; color:#e74c3c;\"><strong>{{envName}}</strong></p>",
+              "`;",
+              "pm.visualizer.set(template, { envName: envName });",
+              "",
+              "// Also surface in test results",
+              "pm.test(\"Environment: \" + envName, function () {",
+              "    pm.expect(envName).to.not.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "pub_d2e3be1db793a0bc7389f8261781b4afae8065b378d96d021d96d33e3c904824",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"eve.holt@reqres.in\",\r\n  \"password\": \"cityslicka\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create USer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "const id = jsonData.id;",
+              "pm.environment.set(\"id\", id);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": ""
+          },
+          {
+            "key": "x-api-key",
+            "value": "pro_ee108842fe1ab4572a8c890e8c14b8d927682348fbb2fedf5618a4883579882b"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update user",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "pro_ee108842fe1ab4572a8c890e8c14b8d927682348fbb2fedf5618a4883579882b"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Nicolas\",\r\n    \"job\": \"cleaner\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Users",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "pro_ee108842fe1ab4572a8c890e8c14b8d927682348fbb2fedf5618a4883579882b"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
